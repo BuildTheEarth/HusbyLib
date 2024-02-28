@@ -62,15 +62,13 @@ allprojects {
 
     publishing {
         repositories {
-            if (System.getenv("MAVEN_USERNAME") != null && System.getenv("MAVEN_PASSWORD")) {
-                maven {
-                    credentials {
-                        username = System.getenv("MAVEN_USERNAME")
-                        password = System.getenv("MAVEN_PASSWORD")
-                    }
-                    name = "HusbyLib"
-                    url = "https://maven.noahhusby.com/releases"
+            maven {
+                credentials {
+                    username = project.findProperty("mavenRepoUser") ?: System.getenv("MAVEN_REPO_USER")
+                    password = project.findProperty("mavenRepoPassword") ?: System.getenv("MAVEN_REPO_PASSWORD")
                 }
+                name = "HusbyLib"
+                url = project.findProperty("mavenRepoUrl") ?: "https://maven.buildtheearth.net/releases"
             }
         }
 
