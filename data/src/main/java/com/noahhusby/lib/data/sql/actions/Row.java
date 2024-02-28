@@ -20,6 +20,9 @@
 
 package com.noahhusby.lib.data.sql.actions;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -27,6 +30,17 @@ public class Row {
     private HashMap<String, Object> content = new HashMap<>();
 
     public void addColumn(String name, Object content) {
+        // Convert LocalDateTime to String
+        if (content instanceof LocalDateTime) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            content = formatter.format((LocalDateTime) content);
+        }
+        // Convert LocalDate to String
+        else if (content instanceof LocalDate) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            content = formatter.format((LocalDate) content);
+        }
+
         this.content.put(name, content);
     }
 
